@@ -114,24 +114,22 @@ const HomePage = () => {
     <Box sx={{ p: 3, maxWidth: 1350, mx: 'auto' }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Typography 
-          variant="h3" 
-          sx={{ 
-            fontWeight: 700, 
-            color: 'black', 
-            mb: 1,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2
-          }}
-        >
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
           <img 
-            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iI0ZGNTczMyIvPgo8IS0tIEhlYWRzZXQgaGVhZGJhbmQgLS0+CjxwYXRoIGQ9Ik0xMCAxOEMxMCAxMS45MjUgMTQuOTI1IDcgMjEgN0MyNy4wNzUgNyAzMiAxMS45MjUgMzIgMThIMzBDMzAgMTMuMDI5IDI1Ljk3MSA5IDIxIDlDMTYuMDI5IDkgMTIgMTMuMDI5IDEyIDE4SDEwWiIgZmlsbD0id2hpdGUiLz4KPCEtLSBMZWZ0IGVhcnBpZWNlIC0tPgo8cmVjdCB4PSI3IiB5PSIxNyIgd2lkdGg9IjUiIGhlaWdodD0iMTAiIHJ4PSIyLjUiIGZpbGw9IndoaXRlIi8+CjwhLS0gUmlnaHQgZWFycGllY2UgLS0+CjxyZWN0IHg9IjI4IiB5PSIxNyIgd2lkdGg9IjUiIGhlaWdodD0iMTAiIHJ4PSIyLjUiIGZpbGw9IndoaXRlIi8+CjwhLS0gTWljcm9waG9uZSBib29tIC0tPgo8cGF0aCBkPSJNMTIgMjVIMjBWMjdIMTJWMjVaIiBmaWxsPSJ3aGl0ZSIvPgo8IS0tIE1pY3JvcGhvbmUgLS0+CjxlbGxpcHNlIGN4PSIyMiIgY3k9IjI5IiByeD0iMyIgcnk9IjIiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPg==" 
+            src="/CrewCall Logo.png" 
             alt="CrewCall Logo" 
-            style={{ width: '55px', height: '50px' }}
+            style={{ width: '40px', height: '40px', borderRadius: '8px' }}
           />
-          CrewCall
-        </Typography>
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              fontWeight: 700, 
+              color: 'black'
+            }}
+          >
+            CrewCall
+          </Typography>
+        </Box>
         <Typography 
           variant="h6" 
           color="text.secondary"

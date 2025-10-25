@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Card, CardContent, CardMedia, TextField, InputAdornment, Chip } from '@mui/material';
-import { Search, BookmarkBorder, History, CalendarToday, LocationOn, People } from '@mui/icons-material';
+import { Box, Typography, Button, Card, CardContent, CardMedia, TextField, InputAdornment, Chip, Dialog, DialogTitle, DialogContent, DialogActions, Avatar } from '@mui/material';
+import { Search, BookmarkBorder, History, CalendarToday, LocationOn, People, Close } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 const EventsPage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
+  const [joinModalOpen, setJoinModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const events = [
     {
@@ -46,6 +48,17 @@ const EventsPage = () => {
     event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     event.location.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleJoinEvent = (event) => {
+    setSelectedEvent(event);
+    setJoinModalOpen(true);
+  };
+
+  const confirmJoinEvent = () => {
+    setJoinModalOpen(false);
+    setSelectedEvent(null);
+    // Add join logic here
+  };
 
   return (
     <Box sx={{ p: 3, maxWidth: 1400, mx: 'auto' }}>
@@ -175,7 +188,7 @@ const EventsPage = () => {
               <Button
                 fullWidth
                 variant="contained"
-                onClick={() => console.log('Join event', event.id)}
+                onClick={() => handleJoinEvent(event)}
                 sx={{
                   bgcolor: '#ff6b35',
                   color: 'white',
@@ -191,6 +204,68 @@ const EventsPage = () => {
           </Card>
         ))}
       </Box>
+
+      {/* Join Event Modal */}
+      <Dialog 
+        open={joinModalOpen} 
+        onClose={() => setJoinModalOpen(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: { borderRadius: 2 }
+        }}
+      >
+        <DialogTitle sx={{ fontWeight: 600, pb: 1 }}>
+          Join Event
+        </DialogTitle>
+        <DialogContent>
+          {selectedEvent && (
+            <Box>
+              <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+                <Avatar
+                  src={selectedEvent.image}
+                  sx={{ width: 60, height: 60, borderRadius: 1 }}
+                />
+                <Box>
+                  <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                    {selectedEvent.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                    📅 {selectedEvent.date}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                    📍 {selectedEvent.location}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    👥 {selectedEvent.participants} participants
+                  </Typography>
+                </Box>
+              </Box>
+              <Typography variant="body1" sx={{ mb: 2 }}>
+                Are you sure you want to join this event? You'll be added to the participant list.
+              </Typography>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ p: 3, pt: 0 }}>
+          <Button 
+            onClick={() => setJoinModalOpen(false)}
+            sx={{ color: '#666' }}
+          >
+            Cancel
+          </Button>
+          <Button 
+            onClick={confirmJoinEvent}
+            variant="contained"
+            sx={{
+              bgcolor: '#ff6b35',
+              '&:hover': { bgcolor: '#e55a2b' }
+            }}
+          >
+            Join Event
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

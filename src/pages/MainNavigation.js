@@ -9,9 +9,13 @@ import ProfilePage from './ProfilePage';
 const MainNavigation = ({ fromLogin = false }) => {
   const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [userType, setUserType] = useState('talent');
 
   useEffect(() => {
     const savedIndex = localStorage.getItem('selectedIndex');
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    setUserType(userData.userType || 'talent');
+    
     if (fromLogin) {
       setSelectedIndex(0);
       localStorage.setItem('selectedIndex', '0');
@@ -47,7 +51,7 @@ const MainNavigation = ({ fromLogin = false }) => {
         <BottomNavigationAction label="Profile" icon={<Person />} />
       </BottomNavigation>
 
-      {selectedIndex === 1 && (
+      {selectedIndex === 1 && userType === 'organiser' && (
         <Fab
           color="primary"
           sx={{

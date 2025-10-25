@@ -8,7 +8,8 @@ const AccountSignUp = () => {
   const navigate = useNavigate();
   const [userType, setUserType] = useState('talent');
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
     password: '',
@@ -27,8 +28,11 @@ const AccountSignUp = () => {
   const handleSignUp = () => {
     const newErrors = {};
     
-    if (!validateName(formData.name)) {
-      newErrors.name = 'Name must be at least 2 characters';
+    if (!validateName(formData.firstName)) {
+      newErrors.firstName = 'First name must be at least 2 characters';
+    }
+    if (!validateName(formData.lastName)) {
+      newErrors.lastName = 'Last name must be at least 2 characters';
     }
     if (!validateEmail(formData.email)) {
       newErrors.email = 'Please enter a valid email';
@@ -48,7 +52,9 @@ const AccountSignUp = () => {
     if (Object.keys(newErrors).length === 0) {
       // Store user data for profile display
       const userData = {
-        name: formData.name,
+        name: `${formData.firstName} ${formData.lastName}`,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
         phone: formData.phone,
         userType: userType,
@@ -105,16 +111,26 @@ const AccountSignUp = () => {
         
         {userType && (
           <>
-            <TextField
-              fullWidth
-              label="Full Name"
-              placeholder="Enter your full name"
-              value={formData.name}
-              onChange={handleChange('name')}
-              error={!!errors.name}
-              helperText={errors.name}
-              sx={{ mb: 2 }}
-            />
+            <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+              <TextField
+                fullWidth
+                label="First Name"
+                placeholder="Enter your first name"
+                value={formData.firstName}
+                onChange={handleChange('firstName')}
+                error={!!errors.firstName}
+                helperText={errors.firstName}
+              />
+              <TextField
+                fullWidth
+                label="Last Name"
+                placeholder="Enter your last name"
+                value={formData.lastName}
+                onChange={handleChange('lastName')}
+                error={!!errors.lastName}
+                helperText={errors.lastName}
+              />
+            </Box>
             <TextField
               fullWidth
               label="Email"
@@ -135,16 +151,7 @@ const AccountSignUp = () => {
               helperText={errors.phone}
               sx={{ mb: 2 }}
             />
-            {userType === 'organiser' && (
-              <TextField
-                fullWidth
-                label="Your Role in Organization"
-                placeholder="e.g., Event Manager, Director, Coordinator"
-                value={formData.roleInOrganization}
-                onChange={handleChange('roleInOrganization')}
-                sx={{ mb: 2 }}
-              />
-            )}
+
             <TextField
               fullWidth
               label="Password"

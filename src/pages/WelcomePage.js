@@ -35,16 +35,11 @@ const WelcomePage = () => {
       {/* Top section */}
       <Box sx={{ flex: 3, bgcolor: 'white', p: 3 }}>
         <Box sx={{ mt: 7, mb: 5, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Box
-            sx={{
-              p: 1,
-              bgcolor: 'primary.main',
-              borderRadius: 1,
-              mr: 1.5,
-            }}
-          >
-            <Headphones sx={{ color: 'white', fontSize: 24 }} />
-          </Box>
+          <img 
+            src="/CrewCall Logo.png" 
+            alt="CrewCall Logo" 
+            style={{ width: '40px', height: '40px', marginRight: '12px', borderRadius: '8px' }}
+          />
           <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'black' }}>
             CrewCall
           </Typography>
