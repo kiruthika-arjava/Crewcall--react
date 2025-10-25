@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, AppBar, Toolbar, IconButton, Card } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
+import { Box, TextField, Button, Typography, AppBar, Toolbar, IconButton, Card, InputAdornment } from '@mui/material';
+import { ArrowBack, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail, validatePassword } from '../utils/validation';
 
@@ -9,6 +9,7 @@ const AccountSignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignIn = () => {
     const newErrors = {};
@@ -23,6 +24,13 @@ const AccountSignIn = () => {
     setErrors(newErrors);
     
     if (Object.keys(newErrors).length === 0) {
+      // Store user data for profile display
+      const userData = {
+        email: email,
+        name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        userType: 'existing'
+      };
+      localStorage.setItem('userData', JSON.stringify(userData));
       navigate('/main');
     }
   };
@@ -59,12 +67,24 @@ const AccountSignIn = () => {
         <TextField
           fullWidth
           label="Password"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           error={!!errors.password}
           helperText={errors.password}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
           sx={{ mb: 3 }}
         />
         <Button
@@ -77,6 +97,12 @@ const AccountSignIn = () => {
         </Button>
         
         <Box sx={{ mt: 2, textAlign: 'center' }}>
+          <Typography
+            sx={{ cursor: 'pointer', textDecoration: 'underline', mb: 1 }}
+            onClick={() => navigate('/forgot-password')}
+          >
+            Forgot Password?
+          </Typography>
           <Typography
             sx={{ cursor: 'pointer', textDecoration: 'underline' }}
             onClick={() => navigate('/signup')}

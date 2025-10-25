@@ -7,12 +7,14 @@ import MainNavigation from './pages/MainNavigation';
 import AccountSignIn from './pages/AccountSignIn';
 import AccountSignUp from './pages/AccountSignUp';
 import MobileSignUp from './pages/MobileSignUp';
+import ForgotPassword from './pages/ForgotPassword';
 import PhoneVerification from './pages/PhoneVerification';
 import TalentProfileSetup from './pages/TalentProfileSetup';
 import CreateEventPage from './pages/CreateEventPage';
 import TalentDetailPage from './pages/TalentDetailPage';
 import MyReservationsPage from './pages/MyReservationsPage';
 import EventHistoryPage from './pages/EventHistoryPage';
+import BookingPage from './pages/BookingPage';
 
 const theme = createTheme({
   palette: {
@@ -44,11 +46,13 @@ function App() {
           <Route path="/signin" element={<AccountSignIn />} />
           <Route path="/signup" element={<AccountSignUp />} />
           <Route path="/signup-mobile" element={<MobileSignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/phone-verification" element={<PhoneVerification />} />
           <Route path="/talent-profile" element={<TalentProfileSetup />} />
           <Route path="/main" element={<MainNavigation fromLogin={true} />} />
           <Route path="/create-event" element={<CreateEventPage />} />
           <Route path="/talent-detail" element={<TalentDetailPage />} />
+          <Route path="/booking" element={<BookingPage />} />
           <Route path="/my-reservations" element={<MyReservationsPage />} />
           <Route path="/event-history" element={<EventHistoryPage />} />
         </Routes>

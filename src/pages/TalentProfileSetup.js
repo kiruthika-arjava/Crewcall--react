@@ -45,6 +45,17 @@ const TalentProfileSetup = () => {
   };
 
   const handleComplete = () => {
+    // Merge talent profile data with existing user data
+    const existingUserData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const updatedUserData = {
+      ...existingUserData,
+      bio: profile.bio,
+      skills: profile.skills,
+      experience: profile.experience,
+      location: profile.location,
+      profilePhoto: selectedPhoto
+    };
+    localStorage.setItem('userData', JSON.stringify(updatedUserData));
     navigate('/main');
   };
 

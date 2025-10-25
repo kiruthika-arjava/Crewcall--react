@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, AppBar, Toolbar, IconButton, Card } from '@mui/material';
-import { ArrowBack, Person, Event } from '@mui/icons-material';
+import { Box, TextField, Button, Typography, AppBar, Toolbar, IconButton, Card, InputAdornment } from '@mui/material';
+import { ArrowBack, Person, Event, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail, validatePhone, validatePassword, validateName } from '../utils/validation';
 
@@ -17,6 +17,8 @@ const AccountSignUp = () => {
   });
   const [organizationType, setOrganizationType] = useState('');
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
@@ -44,6 +46,17 @@ const AccountSignUp = () => {
     setErrors(newErrors);
     
     if (Object.keys(newErrors).length === 0) {
+      // Store user data for profile display
+      const userData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        userType: userType,
+        roleInOrganization: formData.roleInOrganization,
+        organizationType: organizationType
+      };
+      localStorage.setItem('userData', JSON.stringify(userData));
+      
       if (userType === 'talent') {
         navigate('/talent-profile');
       } else {
@@ -135,23 +148,47 @@ const AccountSignUp = () => {
             <TextField
               fullWidth
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="Create a password (min 6 characters)"
               value={formData.password}
               onChange={handleChange('password')}
               error={!!errors.password}
               helperText={errors.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               sx={{ mb: 2 }}
             />
             <TextField
               fullWidth
               label="Confirm Password"
-              type="password"
+              type={showConfirmPassword ? 'text' : 'password'}
               placeholder="Re-enter your password"
               value={formData.confirmPassword}
               onChange={handleChange('confirmPassword')}
               error={!!errors.confirmPassword}
               helperText={errors.confirmPassword}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      edge="end"
+                    >
+                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               sx={{ mb: 2 }}
             />
             {userType === 'organiser' && (
@@ -195,6 +232,12 @@ const AccountSignUp = () => {
         )}
         
         <Box sx={{ mt: 2, textAlign: 'center' }}>
+          <Typography
+            sx={{ cursor: 'pointer', textDecoration: 'underline', mb: 1 }}
+            onClick={() => navigate('/forgot-password')}
+          >
+            Forgot Password?
+          </Typography>
           <Typography
             sx={{ cursor: 'pointer', textDecoration: 'underline' }}
             onClick={() => navigate('/signin')}
